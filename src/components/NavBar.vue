@@ -30,11 +30,12 @@ export default {
 <script setup>
 import { useRoute } from 'vue-router';
 import { useStore } from 'vuex';
-import { onMounted, computed } from 'vue';
+import { onMounted, computed, ref } from 'vue';
 import { getLocal } from '@/common/js/utils';
 
 const route = useRoute();
 const store = useStore();
+let count = ref();
 
 onMounted(() => {
     const token = getLocal('token');
@@ -44,7 +45,7 @@ onMounted(() => {
         store.dispatch('updateCart');
     }
 
-    const count = computed(() => {
+    count = computed(() => {
         return store.state.cartCount
     })
 })

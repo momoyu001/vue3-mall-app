@@ -16,22 +16,50 @@
                 <van-icon name="manager-o"></van-icon>
             </router-link>
         </header>
-        <nav-bar />
+        <NavBar />
+        <Swiper :list="swiperList.data"></Swiper>
     </div>
 </template>
 
 <script>
 export default {
-    name: 'home',
+    name: 'Home',
 };
 </script>
 
 <script setup>
-import { ref } from 'vue';
+import { ref, reactive, onMounted } from 'vue';
 import NavBar from '../components/NavBar.vue';
+import Swiper from '../components/Swiper.vue';
+import { getHome } from '@/service/home';
+import { getLocal } from '@/common/js/utils';
+import { Toast } from 'vant'
 
-const headerScroll = ref(false); // 滚动透明判断
-const isLogin = ref(false); // 是否已登录
+// import { useRouter } from 'vue-router';
+
+// const router = useRouter();
+
+let headerScroll = ref(false); // 滚动透明判断
+let isLogin = ref(false); // 是否已登录
+let swiperList = reactive({
+    data: []
+})
+
+onMounted(async () => {
+    const token = getLocal('token');
+    if (token) {
+        isLogin = true;
+    }
+
+    Toast.loading({
+        message: '加载中...',
+        forbidClick: true
+    });
+
+    const { data } = await getHome();
+    swiperList.data = data.carousels;
+    Toast.clear()
+})
 </script>
 
 <style lang="less" scoped>
