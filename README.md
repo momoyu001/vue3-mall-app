@@ -1,5 +1,7 @@
 # vue3-mall-app
 
+该项目基本完全参照newbee-mall-vue3-app项目实现，仅学习，自己手动实现一个，不做他用。
+
 ## Project setup
 ```
 npm install
